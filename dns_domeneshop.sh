@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-DOMENESHOP_API_ENDPOINT="https://api.domeneshop.no/v0"
+DOMENESHOP_Api_Endpoint="https://api.domeneshop.no/v0"
 
 #####################  Public functions #####################
 
@@ -11,19 +11,19 @@ dns_domeneshop_add() {
   txtvalue=$2
 
   # Get token and secret
-  Domeneshop_Token="${Domeneshop_Token:-$(_readaccountconf_mutable Domeneshop_Token)}"
-  Domeneshop_Secret="${Domeneshop_Secret:-$(_readaccountconf_mutable Domeneshop_Secret)}"
+  DOMENESHOP_Token="${DOMENESHOP_Token:-$(_readaccountconf_mutable DOMENESHOP_Token)}"
+  DOMENESHOP_Secret="${DOMENESHOP_Secret:-$(_readaccountconf_mutable DOMENESHOP_Secret)}"
 
-  if [ -z "$Domeneshop_Token" ] || [ -z "$Domeneshop_Secret" ]; then
-    Domeneshop_Token=""
-    Domeneshop_Secret=""
+  if [ -z "$DOMENESHOP_Token" ] || [ -z "$DOMENESHOP_Secret" ]; then
+    DOMENESHOP_Token=""
+    DOMENESHOP_Secret=""
     _err "You need to spesify a Domeneshop/Domainnameshop API Token and Secret."
-    return 1
+    return 1 
   fi
 
   # Save the api token and secret.
-  _saveaccountconf_mutable Domeneshop_Token "$Domeneshop_Token"
-  _saveaccountconf_mutable Domeneshop_Secret "$Domeneshop_Secret"
+  _saveaccountconf_mutable DOMENESHOP_Token "$DOMENESHOP_Token"
+  _saveaccountconf_mutable DOMENESHOP_Secret "$DOMENESHOP_Secret"
 
   # Get the domain name id
   if ! _get_domainid $fulldomain; then
@@ -42,12 +42,12 @@ dns_domeneshop_rm() {
   txtvalue=$2
 
   # Get token and secret
-  Domeneshop_Token="${Domeneshop_Token:-$(_readaccountconf_mutable Domeneshop_Token)}"
-  Domeneshop_Secret="${Domeneshop_Secret:-$(_readaccountconf_mutable Domeneshop_Secret)}"
+  DOMENESHOP_Token="${DOMENESHOP_Token:-$(_readaccountconf_mutable DOMENESHOP_Token)}"
+  DOMENESHOP_Secret="${DOMENESHOP_Secret:-$(_readaccountconf_mutable DOMENESHOP_Secret)}"
 
-  if [ -z "$Domeneshop_Token" ] || [ -z "$Domeneshop_Secret" ]; then
-    Domeneshop_Token=""
-    Domeneshop_Secret=""
+  if [ -z "$DOMENESHOP_Token" ] || [ -z "$DOMENESHOP_Secret" ]; then
+    DOMENESHOP_Token=""
+    DOMENESHOP_Secret=""
     _err "You need to spesify a Domeneshop/Domainnameshop API Token and Secret."
     return 1
   fi
@@ -135,15 +135,15 @@ _domeneshop_rest() {
   endpoint=$2
   data=$3
 
-  credentials=$(printf "%b" "$Domeneshop_Token:$Domeneshop_Secret" | _base64)
+  credentials=$(printf "%b" "$DOMENESHOP_Token:$DOMENESHOP_Secret" | _base64)
 
   export _H1="Authorization: Basic $credentials"
   export _H2="Content-Type: application/json"
 
   if [ "$method" != "GET" ]; then
-    response="$(_post "$data" "$DOMENESHOP_API_ENDPOINT/$endpoint" "" "$method")";
+    response="$(_post "$data" "$DOMENESHOP_Api_Endpoint/$endpoint" "" "$method")";
   else
-    response="$(_get "$DOMENESHOP_API_ENDPOINT/$endpoint")";
+    response="$(_get "$DOMENESHOP_Api_Endpoint/$endpoint")";
   fi
 
   if [ "$?" != "0" ]; then
