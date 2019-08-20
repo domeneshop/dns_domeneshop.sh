@@ -9,8 +9,8 @@ cp dns_domeneshop.sh ~/.acme.sh/dnsapi/
 Then you'll have to get a Domeneshop API key and secret (https://api.domeneshop.no/docs/).
 
 ```
-export Domeneshop_Token="1234567890"
-export Domeneshop_Secret="1234567890abcdefghijklmnopqrstuvw"
+export DOMENESHOP_Token="1234567890"
+export DOMENESHOP_Secret="1234567890abcdefghijklmnopqrstuvw"
 ```
 
 
@@ -19,4 +19,4 @@ Ok, let's issue a cert now:
 acme.sh --issue --dns dns_domeneshop -d example.com -d www.example.com
 ```
 
-The `Domeneshop_Token` and `Domeneshop_Secret` will be saved in `~/.acme.sh/account.conf` and will be reused when needed.
+The `DOMENESHOP_Token` and `DOMENESHOP_Secret` will be saved in `~/.acme.sh/account.conf` and will be reused when needed.
